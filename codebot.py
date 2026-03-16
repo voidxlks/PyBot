@@ -25,3 +25,17 @@ def review_pull_requests():
 
 if __name__ == "__main__":
     review_pull_requests()
+from github import Github
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+REPO_NAME = "your-username/your-repository"
+
+g = Github(GITHUB_TOKEN)
+repo = g.get_repo(REPO_NAME)
+
+for pr in repo.get_pulls(state="open"):
+    pr.create_issue_comment("🤖 PyCodeBot Review: Please follow coding guidelines.")
